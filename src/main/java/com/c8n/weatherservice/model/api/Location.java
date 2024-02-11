@@ -4,14 +4,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class WeatherApiResponse {
+public abstract class Location {
     private Double latitude;
     private Double longitude;
     private String timezone;
     private Double elevation;
-    
 }

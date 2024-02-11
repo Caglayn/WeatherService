@@ -1,7 +1,10 @@
-package com.c8n.userservice.annotation;
+package com.c8n.weatherservice.annotation;
 
-import com.c8n.userservice.service.CacheService;
+import com.c8n.weatherservice.model.entity.AuthUser;
+import com.c8n.weatherservice.service.CacheService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,13 +12,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
-import static com.c8n.userservice.constant.UserServiceConstant.AUTH_HEADER;
-import static com.c8n.userservice.constant.UserServiceConstant.AUTH_USER;
+import static com.c8n.weatherservice.constant.WeatherServiceConstant.AUTH_HEADER;
+import static com.c8n.weatherservice.constant.WeatherServiceConstant.AUTH_USER;
 
 @Slf4j
 @Aspect
@@ -29,47 +31,37 @@ public class CheckSecurityTokenAspect {
     }
 
     @Around("@annotation(CheckSecurityToken)")
-    public Mono<ResponseEntity<?>> checkSecurityToken(ProceedingJoinPoint joinPoint) {
+    public Object checkSecurityToken(ProceedingJoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
 
         for (Object arg : args) {
-            if (arg instanceof ServerWebExchange exchange) {
-                String token = getAuthHeaderFromRequest(exchange);
-
+            if (arg instanceof HttpServletRequest request) {
+                String token = getAuthHeaderFromRequest(request);
                 if (token != null) {
-                    return cacheService.getCacheUser(token)
-                            .flatMap(authUser -> {
-                                if (authUser != null) {
-                                    exchange.getAttributes().put(AUTH_USER, authUser);
-                                    return proceed(joinPoint);
-                                } else {
-                                    return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized"));
-                                }
-                            })
-                            .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized")));
+                    AuthUser authUser = cacheService.getUserByCacheKey(token);
+                    if (authUser != null){
+                        request.setAttribute(AUTH_USER, authUser);
+                        return proceed(joinPoint);
+                    }
                 } else {
-                    return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized"));
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
                 }
             }
         }
 
-        return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized"));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
     }
 
-    private Mono<ResponseEntity<Object>> proceed(ProceedingJoinPoint joinPoint){
+    private Object proceed(ProceedingJoinPoint joinPoint){
         try {
-            return (Mono<ResponseEntity<Object>>) joinPoint.proceed();
+            return joinPoint.proceed();
         } catch (Throwable e) {
             log.error(e.getMessage());
-            return Mono.just(ResponseEntity.internalServerError().build());
+            return ResponseEntity.internalServerError().build();
         }
     }
 
-    public String getAuthHeaderFromRequest(ServerWebExchange exchange){
-        List<String> authHeaders = exchange.getRequest().getHeaders().get(AUTH_HEADER);
-        if (authHeaders != null && !authHeaders.isEmpty())
-            return authHeaders.getFirst();
-        else
-            return null;
+    public String getAuthHeaderFromRequest(HttpServletRequest request){
+        return request.getHeader(AUTH_HEADER);
     }
 }

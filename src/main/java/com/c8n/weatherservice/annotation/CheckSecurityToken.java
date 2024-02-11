@@ -1,4 +1,4 @@
-package com.c8n.userservice.annotation;
+package com.c8n.weatherservice.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
