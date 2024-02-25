@@ -25,7 +25,7 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-//    @CheckSecurityToken
+    @CheckSecurityToken
     @GetMapping(GETDAILYBYLOCATION)
     public ResponseEntity<WeatherResponse> getWeatherInfoByLocationAndDate(
             @RequestParam(value = "latitude") String latitude,
@@ -39,16 +39,19 @@ public class WeatherController {
                 .orElse(ResponseEntity.internalServerError().build());
     }
 
+    @CheckSecurityToken
     @GetMapping(GETALLDAILYVARS)
     public ResponseEntity<String[]> getAllDailyVariables(HttpServletRequest request){
         return weatherService.getAllDailyVariables();
     }
 
+    @CheckSecurityToken
     @GetMapping(GETALLHOURLYVARS)
     public ResponseEntity<String[]> getAllHourlyVariables(HttpServletRequest request) {
         return weatherService.getAllHourlyVariables();
     }
 
+    @CheckSecurityToken
     @GetMapping(GETDAILYSUMMARY)
     public ResponseEntity<List<SingleValue>> getDailySummary(
             @RequestParam(value = "latitude") String latitude,
@@ -60,6 +63,7 @@ public class WeatherController {
                 .orElse(ResponseEntity.internalServerError().build());
     }
 
+    @CheckSecurityToken
     @GetMapping(GETHOURLYDATABYPARAM)
     public ResponseEntity<List<SingleValue>> getHourlyAllDayInfoByParam(
             @RequestParam(value = "latitude") String latitude,
