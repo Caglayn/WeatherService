@@ -12,4 +12,7 @@ public class SingleValue {
     private String unit;
     private String val;
     private String explanation;
+    private String icon;
+    private Long unixTime;
+    private String formattedTime;
 }

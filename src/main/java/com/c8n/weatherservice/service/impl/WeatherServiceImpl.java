@@ -1,11 +1,14 @@
 package com.c8n.weatherservice.service.impl;
 
+import com.c8n.weatherservice.constant.WeatherServiceConstant;
+import com.c8n.weatherservice.exception.RequiredParameterException;
 import com.c8n.weatherservice.model.api.WeatherResponse;
 import com.c8n.weatherservice.model.response.SingleValue;
 import com.c8n.weatherservice.service.WeatherService;
 import com.c8n.weatherservice.util.ControlUtil;
 import com.c8n.weatherservice.util.HttpUtil;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -63,15 +66,49 @@ public class WeatherServiceImpl implements WeatherService {
         List<SingleValue> summaryList = new ArrayList<>();
 
         for (String param : DAILY_SUMMARY_PARAMS){
-            summaryList.add(SingleValue.builder()
-                    .name(param)
-                    .unit(weatherResponse.getDailyUnit().get(param))
-                    .explanation(DAILY_PARAM_EXPLANATIONS.get(param))
-                    .val(weatherResponse.getDailyValue().get(param)[0].toString())
-                    .build());
+            if (weatherResponse.getDailyValue().get(param)[0] != null)
+                summaryList.add(SingleValue.builder()
+                        .name(param)
+                        .unit(weatherResponse.getDailyUnit().get(param))
+                        .explanation(DAILY_PARAM_EXPLANATIONS.get(param))
+                        .val(weatherResponse.getDailyValue().get(param)[0].toString())
+                        .icon(DAILY_PARAM_ICONS.get(param))
+                        .build());
         }
 
         return summaryList.isEmpty() ? Optional.empty() : Optional.of(summaryList);
+    }
+
+    @Override
+    public Optional<List<SingleValue>> getHourlyAllDayInfoByParam(String date, String latitude, String longitude, String hourlyParam) {
+        ControlUtil.checkRequiredParams(hourlyParam);
+
+        Optional<WeatherResponse> weatherResponseOptional = getDailyWeatherInfo(date, latitude, longitude);
+        if (weatherResponseOptional.isEmpty())
+            return Optional.empty();
+
+        WeatherResponse weatherResponse = weatherResponseOptional.get();
+
+        Long[] timeArray = weatherResponse.getHourlyValue().get("time");
+        Long[] paramArray = weatherResponse.getHourlyValue().get(hourlyParam);
+
+        if (paramArray == null || paramArray.length == 0)
+            throw new RequiredParameterException("Daily param not found !", HttpStatus.BAD_REQUEST.value());
+
+        List<SingleValue> valueList = new ArrayList<>();
+        for (int i = 0; i < timeArray.length; i++){
+            valueList.add(SingleValue.builder()
+                    .name(hourlyParam.replaceAll("_", " "))
+                    .unit(weatherResponse.getHourlyUnit().get(hourlyParam))
+                    .val(paramArray[i] != null ? paramArray[i].toString() : "-1")
+                    .explanation(HOURLY_PARAM_EXPLANATIONS.get(hourlyParam))
+                    .icon(HOURLY_PARAM_ICONS.get(hourlyParam))
+                    .unixTime(timeArray[i]*1000)
+                    .formattedTime(WeatherServiceConstant.DATE_FORMAT.format(new Date(timeArray[i]*1000)))
+                    .build());
+        }
+
+        return valueList.isEmpty() ? Optional.empty() : Optional.of(valueList);
     }
 
     private Map<String, String> getParamMap(String date, String latitude, String longitude){

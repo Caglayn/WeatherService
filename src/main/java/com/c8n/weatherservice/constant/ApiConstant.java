@@ -27,6 +27,9 @@ public class ApiConstant {
     public static final Map<String, String> DAILY_PARAM_EXPLANATIONS = new HashMap<>();
     public static final Map<String, String> HOURLY_PARAM_EXPLANATIONS = new HashMap<>();
 
+    public static final Map<String, String> DAILY_PARAM_ICONS = new HashMap<>();
+    public static final Map<String, String> HOURLY_PARAM_ICONS = new HashMap<>();
+
     static {
         DAILY_PARAM_EXPLANATIONS.put("weather_code", "The most severe weather condition on a given day");
         DAILY_PARAM_EXPLANATIONS.put("temperature_2m_max", "Maximum daily air temperature at 2 meters above ground");
@@ -85,6 +88,65 @@ public class ApiConstant {
         HOURLY_PARAM_EXPLANATIONS.put("soil_moisture_7_to_28cm", "Average soil water content as volumetric mixing ratio at 0-7, 7-28, 28-100 and 100-255 cm depths.");
         HOURLY_PARAM_EXPLANATIONS.put("soil_moisture_28_to_100cm", "Average soil water content as volumetric mixing ratio at 0-7, 7-28, 28-100 and 100-255 cm depths.");
         HOURLY_PARAM_EXPLANATIONS.put("soil_moisture_100_to_255cm", "Average soil water content as volumetric mixing ratio at 0-7, 7-28, 28-100 and 100-255 cm depths.");
+
+        DAILY_PARAM_ICONS.put("weather_code", "<i class=\"fa-solid fa-cloud\"></i>");
+        DAILY_PARAM_ICONS.put("temperature_2m_max", "<i class=\"fa-solid fa-temperature-high\"></i>");
+        DAILY_PARAM_ICONS.put("temperature_2m_min", "<i class=\"fa-solid fa-temperature-low\"></i>");
+        DAILY_PARAM_ICONS.put("temperature_2m_mean", "<i class=\"fa-solid fa-temperature-three-quarters\"></i>");
+        DAILY_PARAM_ICONS.put("apparent_temperature_max", "<i class=\"fa-solid fa-temperature-three-quarters\"></i>");
+        DAILY_PARAM_ICONS.put("apparent_temperature_min", "<i class=\"fa-solid fa-temperature-three-quarters\"></i>");
+        DAILY_PARAM_ICONS.put("apparent_temperature_mean", "<i class=\"fa-solid fa-temperature-three-quarters\"></i>");
+        DAILY_PARAM_ICONS.put("sunrise", "<i class=\"fa-light fa-cloud-sun\"></i>");
+        DAILY_PARAM_ICONS.put("sunset", "<i class=\"fa-solid fa-cloud-sun\"></i>");
+        DAILY_PARAM_ICONS.put("daylight_duration", "<i class=\"fa-regular fa-sun\"></i>");
+        DAILY_PARAM_ICONS.put("sunshine_duration", "<i class=\"fa-solid fa-sun\"></i>");
+        DAILY_PARAM_ICONS.put("precipitation_sum", "<i class=\"fa-solid fa-cloud-rain\"></i>");
+        DAILY_PARAM_ICONS.put("rain_sum", "<i class=\"fa-solid fa-cloud-showers-heavy\"></i>");
+        DAILY_PARAM_ICONS.put("snowfall_sum", "<i class=\"fa-regular fa-snowflake\"></i>");
+        DAILY_PARAM_ICONS.put("precipitation_hours", "<i class=\"fa-solid fa-cloud-rain\"></i>");
+        DAILY_PARAM_ICONS.put("wind_speed_10m_max", "<i class=\"fa-solid fa-wind\"></i>");
+        DAILY_PARAM_ICONS.put("wind_gusts_10m_max", "<i class=\"fa-solid fa-wind\"></i>");
+        DAILY_PARAM_ICONS.put("wind_direction_10m_dominant", "<i class=\"fa-solid fa-compass\"></i>");
+        DAILY_PARAM_ICONS.put("shortwave_radiation_sum", "<i class=\"fa-solid fa-radiation\"></i>");
+        DAILY_PARAM_ICONS.put("et0_fao_evapotranspiration", "<i class=\"fa-solid fa-bowl-rice\"></i>");
+
+        HOURLY_PARAM_ICONS.put("temperature_2m", "fa-solid fa-temperature-quarter");
+        HOURLY_PARAM_ICONS.put("relative_humidity_2m", "fa-solid fa-droplet");
+        HOURLY_PARAM_ICONS.put("dew_point_2m", "fa-solid fa-snowflake");
+        HOURLY_PARAM_ICONS.put("apparent_temperature", "fa-solid fa-temperature-quarter");
+        HOURLY_PARAM_ICONS.put("pressure_msl", "fa-solid fa-weight-hanging");
+        HOURLY_PARAM_ICONS.put("surface_pressure", "fa-solid fa-weight-hanging");
+        HOURLY_PARAM_ICONS.put("precipitation", "fa-solid fa-cloud-sun-rain");
+        HOURLY_PARAM_ICONS.put("rain", "fa-solid fa-cloud-rain");
+        HOURLY_PARAM_ICONS.put("snowfall", "fa-solid fa-snowflake");
+        HOURLY_PARAM_ICONS.put("cloud_cover", "fa-solid fa-cloud");
+        HOURLY_PARAM_ICONS.put("cloud_cover_low", "fa-solid fa-cloud-arrow-down");
+        HOURLY_PARAM_ICONS.put("cloud_cover_mid", "fa-solid fa-cloud");
+        HOURLY_PARAM_ICONS.put("cloud_cover_high", "fa-solid fa-cloud-arrow-up");
+        HOURLY_PARAM_ICONS.put("shortwave_radiation", "fa-solid fa-radiation");
+        HOURLY_PARAM_ICONS.put("direct_radiation", "fa-solid fa-radiation");
+        HOURLY_PARAM_ICONS.put("direct_normal_irradiance", "fa-solid fa-sun");
+        HOURLY_PARAM_ICONS.put("diffuse_radiation", "fa-solid fa-radiation");
+        HOURLY_PARAM_ICONS.put("global_tilted_irradiance", "fa-solid fa-sun");
+        HOURLY_PARAM_ICONS.put("sunshine_duration", "fa-solid fa-cloud-sun");
+        HOURLY_PARAM_ICONS.put("wind_speed_10m", "fa-solid fa-wind");
+        HOURLY_PARAM_ICONS.put("wind_speed_100m", "fa-solid fa-wind");
+        HOURLY_PARAM_ICONS.put("wind_direction_10m", "fa-solid fa-wind");
+        HOURLY_PARAM_ICONS.put("wind_direction_100m", "fa-solid fa-wind");
+        HOURLY_PARAM_ICONS.put("wind_gusts_10m", "fa-solid fa-wind");
+        HOURLY_PARAM_ICONS.put("et0_fao_evapotranspiration", "fa-solid fa-arrow-up-from-ground-water");
+        HOURLY_PARAM_ICONS.put("weather_code", "fa-solid fa-qrcode");
+        HOURLY_PARAM_ICONS.put("snow_depth", "fa-solid fa-mountain");
+        HOURLY_PARAM_ICONS.put("vapour_pressure_deficit", "fa-solid fa-arrow-up-from-ground-water");
+        HOURLY_PARAM_ICONS.put("soil_temperature_0_to_7cm", "fa-solid fa-grip-lines");
+        HOURLY_PARAM_ICONS.put("soil_temperature_7_to_28cm", "fa-solid fa-grip-lines");
+        HOURLY_PARAM_ICONS.put("soil_temperature_28_to_100cm", "fa-solid fa-grip-lines");
+        HOURLY_PARAM_ICONS.put("soil_temperature_100_to_255cm", "fa-solid fa-grip-lines");
+        HOURLY_PARAM_ICONS.put("soil_moisture_0_to_7cm", "fa-solid fa-house-flood-water");
+        HOURLY_PARAM_ICONS.put("soil_moisture_7_to_28cm", "fa-solid fa-house-flood-water");
+        HOURLY_PARAM_ICONS.put("soil_moisture_28_to_100cm", "fa-solid fa-house-flood-water");
+        HOURLY_PARAM_ICONS.put("soil_moisture_100_to_255cm", "fa-solid fa-house-flood-water");
+
     }
 
     public static String getArrayAsDelimetedString(String[] array){

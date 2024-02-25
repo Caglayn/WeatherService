@@ -59,4 +59,16 @@ public class WeatherController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.internalServerError().build());
     }
+
+    @GetMapping(GETHOURLYDATABYPARAM)
+    public ResponseEntity<List<SingleValue>> getHourlyAllDayInfoByParam(
+            @RequestParam(value = "latitude") String latitude,
+            @RequestParam(value = "longitude") String longitude,
+            @RequestParam(value = "date") String date,
+            @RequestParam(value = "param") String hourlyParam,
+            HttpServletRequest request){
+        return weatherService.getHourlyAllDayInfoByParam(date, latitude, longitude, hourlyParam)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.internalServerError().build());
+    }
 }

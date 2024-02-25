@@ -12,4 +12,5 @@ public interface WeatherService {
     ResponseEntity<String[]> getAllDailyVariables();
     ResponseEntity<String[]> getAllHourlyVariables();
     Optional<List<SingleValue>> getDailySummary(String date, String latitude, String longitude);
+    Optional<List<SingleValue>> getHourlyAllDayInfoByParam(String date, String latitude, String longitude, String hourlyParam);
 }
