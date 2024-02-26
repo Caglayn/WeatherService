@@ -75,4 +75,9 @@ public class WeatherController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.internalServerError().build());
     }
+
+    @GetMapping(PING)
+    public ResponseEntity<String> pingPong(){
+        return ResponseEntity.ok("pong");
+    }
 }

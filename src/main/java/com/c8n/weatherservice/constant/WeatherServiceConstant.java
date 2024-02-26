@@ -15,6 +15,7 @@ public class WeatherServiceConstant {
     public static final String GETALLHOURLYVARS = "/getallhourlyvars";
     public static final String GETDAILYSUMMARY = "/getdailysummary";
     public static final String GETHOURLYDATABYPARAM = "/gethourlydatabyparam";
+    public static final String PING = "/ping";
 
 
     public static final String AUTH_HEADER = "Authorization";
