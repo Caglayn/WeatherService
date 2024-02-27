@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${server_ip}:${postgres_port}/weatherdb
+    url: jdbc:postgresql://${postgres_server}:${postgres_port}/weatherdb
     hikari:
       username: ${postgres_username}
       password: ${postgres_password}

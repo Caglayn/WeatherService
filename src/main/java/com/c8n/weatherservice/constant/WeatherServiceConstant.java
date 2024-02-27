@@ -1,7 +1,7 @@
 package com.c8n.weatherservice.constant;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class WeatherServiceConstant {
 
@@ -20,4 +20,9 @@ public class WeatherServiceConstant {
 
     public static final String AUTH_HEADER = "Authorization";
     public static final String AUTH_USER = "authUser";
+
+    public static final List<String> ALLOWED_ORIGINS = List.of(
+            "http://localhost:3000",
+            "http://89.117.48.141"
+    );
 }
